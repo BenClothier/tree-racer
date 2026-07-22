@@ -33,6 +33,10 @@ img {
   flex-wrap: wrap;
 }
 
+.hidden {
+  display: none;
+}
+
 input {
   flex: 1;
   min-width: 220px;
