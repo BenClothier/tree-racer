@@ -1,4 +1,4 @@
-const API_KEY = "YOUR_PLANTNET_API_KEY";
+const API_KEY = "2b10lmyqdNHUjR80Hl5EcWVNe";
 const API_BASE = "https://my-api.plantnet.org/v2";
 
 const rounds = [
