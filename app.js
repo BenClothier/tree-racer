@@ -55,36 +55,6 @@ function getSpeciesImage(species) {
   );
 }
 
-async function fetchRandomPerenualImage(query) {
-  const url = `${API_BASE}/species-list?q=${encodeURIComponent(query)}&key=${encodeURIComponent(API_KEY)}`;
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error(`Perenual request failed: ${res.status}`);
-  }
-
-  const data = await res.json();
-  const species = data?.data || [];
-
-  if (!species.length) {
-    throw new Error("No species found.");
-  }
-
-  const candidates = species.filter(s => getSpeciesImage(s));
-  const chosenPool = candidates.length ? candidates : species;
-  const pickedSpecies = pick(chosenPool);
-  const imageUrl = getSpeciesImage(pickedSpecies);
-
-  if (!imageUrl) {
-    throw new Error("No image available for that species.");
-  }
-
-  return {
-    imageUrl,
-    label: pickedSpecies?.scientific_name || pickedSpecies?.common_name || query
-  };
-}
-
 async function fetchSpeciesImageById(id) {
   const url = `${API_BASE}/species/details/${{encodeURIComponent(id)}?key=${encodeURIComponent(API_KEY)}`;
   const res = await fetch(url);
