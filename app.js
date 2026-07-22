@@ -56,7 +56,7 @@ function getSpeciesImage(species) {
 }
 
 async function fetchSpeciesImageById(id) {
-  const url = `${API_BASE}/species/details/${{encodeURIComponent(id)}?key=${encodeURIComponent(API_KEY)}`;
+  const url = `${API_BASE}/species/details/${encodeURIComponent(id)}?key=${encodeURIComponent(API_KEY)}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Perenual request failed: ${res.status}`);
 
