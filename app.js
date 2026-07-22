@@ -112,10 +112,6 @@ function startGame() {
   started = true;
   startControls.classList.add("hidden");
   gameControls.classList.remove("hidden");
-  photo.classList.remove("hidden");
-  status.classList.remove("hidden");
-  answer.classList.remove("hidden");
-  score.classList.remove("hidden");
   loadRound();
   setScore();
 }
@@ -152,10 +148,5 @@ guess.addEventListener("keydown", e => {
   if (e.key === "Enter" && started && !checkedThisRound) checkBtn.click();
 });
 
-gameControls.classList.add("hidden");
-photo.classList.add("hidden");
-status.classList.add("hidden");
-answer.classList.add("hidden");
-score.classList.add("hidden");
 setNextLabel();
 setScore();
