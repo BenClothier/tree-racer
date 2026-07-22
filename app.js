@@ -148,5 +148,5 @@ guess.addEventListener("keydown", e => {
   if (e.key === "Enter" && started && !checkedThisRound) checkBtn.click();
 });
 
-loadRound();
+setNextLabel();
 setScore();
