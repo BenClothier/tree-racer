@@ -31,6 +31,8 @@ function setScore() {
 
 function setNextLabel() {
   nextBtn.textContent = checkedThisRound ? "Next" : "Pass";
+  nextBtn.classList.toggle("pass", !checkedThisRound);
+  nextBtn.classList.toggle("secondary", checkedThisRound);
 }
 
 function pick(arr) {
