@@ -108,6 +108,14 @@ async function loadRound() {
   }
 }
 
+function startGame() {
+  started = true;
+  startControls.classList.add("hidden");
+  gameControls.classList.remove("hidden");
+  loadRound();
+  setScore();
+}
+
 checkBtn.addEventListener("click", () => {
   if (!current || checkedThisRound) return;
 
