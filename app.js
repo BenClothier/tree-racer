@@ -24,6 +24,7 @@ const nextBtn = document.getElementById("next");
 const beginBtn = document.getElementById("begin");
 const startControls = document.getElementById("startControls");
 const gameControls = document.getElementById("gameControls");
+const gameStatus = document.getElementById("gameStatus");
 
 function norm(s) {
   return (s || "").trim().toLowerCase();
@@ -112,6 +113,7 @@ function startGame() {
   started = true;
   startControls.classList.add("hidden");
   gameControls.classList.remove("hidden");
+  gameStatus.classList.remove("hidden");
   loadRound();
   setScore();
 }
