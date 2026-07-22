@@ -3,87 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tree Drill</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; background:#f5f7f5; color:#1d241d; }
-    .app { max-width: 760px; margin: 0 auto; padding: 24px; }
-    .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,.08); }
-    img { width: 100%; max-height: 520px; object-fit: cover; border-radius: 12px; background:#e9ece9; }
-    .row { display:flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-    input { flex: 1; min-width: 220px; padding: 12px 14px; border: 1px solid #ccd6cc; border-radius: 10px; font-size: 16px; }
-    button { padding: 12px 16px; border: 0; border-radius: 10px; background:#2d6a4f; color:white; cursor:pointer; font-size: 16px; }
-    button.secondary { background:#4c5f4f; }
-    .meta { margin-top: 12px; font-size: 15px; }
-    .status { margin-top: 12px; font-weight: 600; }
-    .muted { color:#5f6d5f; }
-  </style>
+  <title>Tree Racer</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app">
     <div class="card">
       <h1>Tree Drill</h1>
       <p class="muted">Guess the tree from the photo.</p>
-      <img id="photo" alt="Random tree" />
+
+      <img id="photo" alt="Tree photo" />
+
       <div class="row">
         <input id="guess" placeholder="Enter tree name" autocomplete="off" />
         <button id="check">Check</button>
         <button id="next" class="secondary">Next</button>
       </div>
+
       <div id="status" class="status"></div>
       <div id="answer" class="meta muted"></div>
       <div id="score" class="meta"></div>
     </div>
   </div>
 
-  <script>
-    const rounds = [
-      { query: "oak tree", answer: "oak" },
-      { query: "pine tree", answer: "pine" },
-      { query: "birch tree", answer: "birch" },
-      { query: "maple tree", answer: "maple" }
-    ];
-
-    let current = null;
-    let score = 0;
-    let seen = 0;
-
-    const photo = document.getElementById("photo");
-    const guess = document.getElementById("guess");
-    const status = document.getElementById("status");
-    const answer = document.getElementById("answer");
-    const scoreEl = document.getElementById("score");
-
-    function norm(s) {
-      return s.trim().toLowerCase();
-    }
-
-    function setScore() {
-      scoreEl.textContent = `Score: ${score}/${seen}`;
-    }
-
-    function loadRound() {
-      current = rounds[Math.floor(Math.random() * rounds.length)];
-      photo.src = `https://source.unsplash.com/featured/1200x800/?${encodeURIComponent(current.query)}`;
-      guess.value = "";
-      status.textContent = "";
-      answer.textContent = "";
-    }
-
-    document.getElementById("check").addEventListener("click", () => {
-      if (!current) return;
-      seen++;
-      const ok = norm(guess.value) === norm(current.answer);
-      if (ok) score++;
-      status.textContent = ok ? "Correct!" : "Not quite.";
-      answer.textContent = `Answer: ${current.answer}`;
-      setScore();
-    });
-
-    document.getElementById("next").addEventListener("click", loadRound);
-    guess.addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("check").click(); });
-
-    loadRound();
-    setScore();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
