@@ -2,10 +2,7 @@ const API_KEY = "sk-j5X96a61005fc901818920";
 const API_BASE = "https://perenual.com/api/v2";
 
 const rounds = [
-  { query: "oak", answer: "oak" },
-  { query: "pine", answer: "pine" },
-  { query: "birch", answer: "birch" },
-  { query: "maple", answer: "maple" }
+  { id: "6520", answer: "English Oak" },
 ];
 
 let current = null;
@@ -86,6 +83,31 @@ async function fetchRandomPerenualImage(query) {
   };
 }
 
+async function fetchSpeciesImageById(id) {
+  const url = `${API_BASE}/species/details/${{encodeURIComponent(id)}?key=${encodeURIComponent(API_KEY)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Perenual request failed: ${res.status}`);
+
+  const data = await res.json();
+  const images = [
+    data?.default_image?.original_url,
+    data?.default_image?.regular_url,
+    ...(data?.other_images || []).flatMap(img => [
+      img?.original_url,
+      img?.regular_url
+    ])
+  ].filter(Boolean);
+
+  if (!images.length) {
+    throw new Error("No image available for that species.");
+  }
+
+  return {
+    imageUrl: pick(images),
+    label: data?.scientific_name?.[0] || data?.common_name || String(id)
+  };
+}
+
 async function loadRound() {
   current = pick(rounds);
   checkedThisRound = false;
@@ -97,7 +119,7 @@ async function loadRound() {
   setNextLabel();
 
   try {
-    const result = await fetchRandomPerenualImage(current.query);
+    const result = await fetchSpeciesImageById(current.id);
     photo.src = result.imageUrl;
     photo.alt = result.label || "Tree photo";
     status.textContent = "";
