@@ -119,6 +119,7 @@ checkBtn.addEventListener("click", () => {
 
 nextBtn.addEventListener("click", () => {
   if (!checkedThisRound) {
+    seen++;
     loadRound();
     return;
   }
