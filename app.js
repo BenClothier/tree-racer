@@ -12,6 +12,7 @@ let current = null;
 let score = 0;
 let seen = 0;
 let checkedThisRound = false;
+let started = false;
 
 const photo = document.getElementById("photo");
 const guess = document.getElementById("guess");
@@ -20,6 +21,9 @@ const answer = document.getElementById("answer");
 const scoreEl = document.getElementById("score");
 const checkBtn = document.getElementById("check");
 const nextBtn = document.getElementById("next");
+const beginBtn = document.getElementById("begin");
+const startControls = document.getElementById("startControls");
+const gameControls = document.getElementById("gameControls");
 
 function norm(s) {
   return (s || "").trim().toLowerCase();
@@ -88,6 +92,7 @@ async function loadRound() {
   status.textContent = "Loading...";
   answer.textContent = "";
   checkBtn.disabled = false;
+  nextBtn.disabled = false;
   setNextLabel();
 
   try {
@@ -120,6 +125,7 @@ checkBtn.addEventListener("click", () => {
 });
 
 nextBtn.addEventListener("click", () => {
+  if (!started) return;
   if (!checkedThisRound) {
     seen++;
     loadRound();
@@ -127,8 +133,11 @@ nextBtn.addEventListener("click", () => {
   }
   loadRound();
 });
+
+beginBtn.addEventListener("click", startGame);
+
 guess.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !checkedThisRound) checkBtn.click();
+  if (e.key === "Enter" && started && !checkedThisRound) checkBtn.click();
 });
 
 loadRound();
