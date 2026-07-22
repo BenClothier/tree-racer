@@ -11,6 +11,7 @@ const rounds = [
 let current = null;
 let score = 0;
 let seen = 0;
+let checkedThisRound = false;
 
 const photo = document.getElementById("photo");
 const guess = document.getElementById("guess");
@@ -26,6 +27,10 @@ function norm(s) {
 
 function setScore() {
   scoreEl.textContent = `Score: ${score}/${seen}`;
+}
+
+function setNextLabel() {
+  nextBtn.textContent = checkedThisRound ? "Next" : "Pass";
 }
 
 function pick(arr) {
@@ -76,9 +81,12 @@ async function fetchRandomPerenualImage(query) {
 
 async function loadRound() {
   current = pick(rounds);
+  checkedThisRound = false;
   guess.value = "";
   status.textContent = "Loading...";
   answer.textContent = "";
+  checkBtn.disabled = false;
+  setNextLabel();
 
   try {
     const result = await fetchRandomPerenualImage(current.query);
@@ -94,8 +102,10 @@ async function loadRound() {
 }
 
 checkBtn.addEventListener("click", () => {
-  if (!current) return;
+  if (!current || checkedThisRound) return;
 
+  checkedThisRound = true;
+  checkBtn.disabled = true;
   seen++;
   const ok = norm(guess.value) === norm(current.answer);
 
@@ -104,11 +114,18 @@ checkBtn.addEventListener("click", () => {
   status.textContent = ok ? "Correct!" : "Not quite.";
   answer.textContent = `Answer: ${current.answer}`;
   setScore();
+  setNextLabel();
 });
 
-nextBtn.addEventListener("click", loadRound);
+nextBtn.addEventListener("click", () => {
+  if (!checkedThisRound) {
+    loadRound();
+    return;
+  }
+  loadRound();
+});
 guess.addEventListener("keydown", e => {
-  if (e.key === "Enter") checkBtn.click();
+  if (e.key === "Enter" && !checkedThisRound) checkBtn.click();
 });
 
 loadRound();
