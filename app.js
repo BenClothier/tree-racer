@@ -3,6 +3,8 @@ const API_BASE = "https://perenual.com/api/v2";
 
 const rounds = [
   { id: "6520", answer: "English Oak" },
+  { id: "5517", answer: "Olive" },
+  { id: "1289", answer: "Silver Birch" },
 ];
 
 let current = null;
