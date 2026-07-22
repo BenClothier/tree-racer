@@ -29,7 +29,7 @@ function setScore() {
 }
 
 async function fetchRandomPlantnetImage(speciesQuery) {
-  const url = `${API_BASE}/taxonomy?genus=${encodeURIComponent(speciesQuery)}&images=true&api-key=${encodeURIComponent(API_KEY)}`;
+  const url = `${API_BASE}/taxonomy?species=${encodeURIComponent(speciesQuery)}&images=true&api-key=${encodeURIComponent(API_KEY)}`;
   const res = await fetch(url);
 
   if (!res.ok) {
